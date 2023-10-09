@@ -5,6 +5,7 @@ let firstNumber = undefined;
 let operator = undefined;
 let secondNumber = undefined;
 let displayValue = "";
+let stringMode = false;
 
 buttons.forEach((button) => {
   button.addEventListener("click", (event) => {
@@ -21,10 +22,10 @@ buttons.forEach((button) => {
       updateDisplay(pressed);
     }
     if (
-      (pressed === "add" ||
-        pressed === "subtract" ||
-        pressed === "multiply" ||
-        pressed === "divide") &&
+      (pressed === "+" ||
+        pressed === "-" ||
+        pressed === "x" ||
+        pressed === "÷") &&
       operator === undefined
     ) {
       console.log("operator undefined");
@@ -44,6 +45,17 @@ buttons.forEach((button) => {
       secondNumber += pressed;
       updateDisplay(pressed);
     }
+    if (
+      (pressed === "+" ||
+        pressed === "-" ||
+        pressed === "x" ||
+        pressed === "÷") &&
+      secondNumber !== undefined
+    ) {
+      console.log("string together mode");
+      stringMode = true;
+      decideOperation();
+    }
 
     console.log(
       `firstNumber: ${firstNumber} | operator: ${operator} | secondNumber: ${secondNumber}`
@@ -60,27 +72,18 @@ buttons.forEach((button) => {
 });
 
 function updateDisplay(pressed) {
-  if (pressed === "multiply") {
-    pressed = "x";
-  } else if (pressed === "divide") {
-    pressed = "÷";
-  } else if (pressed === "add") {
-    pressed = "+";
-  } else if (pressed === "subtract") {
-    pressed = "-";
-  }
   display.textContent = displayValue += pressed;
 }
 
 function decideOperation() {
   display.textContent = "";
-  if (operator === "add") {
+  if (operator === "+") {
     add(firstNumber, secondNumber);
-  } else if (operator === "subtract") {
+  } else if (operator === "-") {
     subtract(firstNumber, secondNumber);
-  } else if (operator === "multiply") {
+  } else if (operator === "x") {
     multiply(firstNumber, secondNumber);
-  } else if (operator === "divide") {
+  } else if (operator === "÷") {
     divide(firstNumber, secondNumber);
   }
 }
@@ -95,10 +98,19 @@ function clear() {
 }
 
 function continueSum(newfirst) {
+  console.log("continue sum-----------------------");
+  console.log(stringMode);
   firstNumber = newfirst;
-  displayValue = firstNumber;
-  operator = undefined;
   secondNumber = undefined;
+  if (stringMode === false) {
+    operator = undefined;
+    displayValue = firstNumber;
+    display.textContent = displayValue;
+  } else {
+    stringMode = false;
+    displayValue = firstNumber + operator;
+    display.textContent = displayValue;
+  }
 }
 
 const add = (a, b) => {

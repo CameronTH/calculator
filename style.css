@@ -54,10 +54,10 @@ body {
   cursor: pointer;
 }
 
-#equals,
-#add,
-#subtract,
-#multiply,
-#divide {
+[id="-"],
+[id="+"],
+[id="x"],
+[id="÷"],
+[id="equals"] {
   background-color: rgb(255, 153, 0);
 }
