@@ -131,5 +131,5 @@ const multiply = (a, b) => {
 const divide = (a, b) => {
   let divide = +a / +b;
   display.textContent = divide;
-  continueSum(display);
+  continueSum(divide);
 };
