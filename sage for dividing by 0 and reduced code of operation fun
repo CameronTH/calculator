@@ -1,0 +1,35 @@
+[33mcommit 712de458e020c8cdbecc8716a59296969aa51705[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: CameronTH <cameronthomson40@gmail.com>
+Date:   Mon Oct 9 22:47:48 2023 +0100
+
+    Fixed display issue when dividing
+
+[33mcommit 53c2ced4ecb03448b791ac444310f6b62c4d1d1e[m
+Author: CameronTH <cameronthomson40@gmail.com>
+Date:   Mon Oct 9 22:45:34 2023 +0100
+
+    Calculator can now string together several operations
+
+[33mcommit 8bfb80396fcb01f2c33bd3f659551923b91fdff1[m
+Author: CameronTH <cameronthomson40@gmail.com>
+Date:   Mon Oct 9 21:36:54 2023 +0100
+
+    Calculator can now carry out sums with a single operator
+
+[33mcommit 12ae4648a01da6d6bd1b42e059f3279b896a2feb[m
+Author: CameronTH <cameronthomson40@gmail.com>
+Date:   Mon Oct 9 19:37:20 2023 +0100
+
+    Started logic for inputing fist number and selecting an operator
+
+[33mcommit cf578be601c38c926f93fc51dbe5d0ba61a77063[m
+Author: CameronTH <cameronthomson40@gmail.com>
+Date:   Mon Oct 9 17:00:32 2023 +0100
+
+    Created HTML and CSS for the calculators layout and style
+
+[33mcommit 0bda2e6da4f210e6e2e15b4dbe03c9fce66b5f66[m
+Author: CameronTH <86117784+CameronTH@users.noreply.github.com>
+Date:   Mon Oct 9 16:05:34 2023 +0100
+
+    Initial commit

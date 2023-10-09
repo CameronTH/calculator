@@ -18,6 +18,8 @@ body {
 }
 .display {
   display: flex;
+  align-items: end;
+  justify-content: end;
 
   align-items: end;
   margin-bottom: 5px;
@@ -49,7 +51,10 @@ body {
   border-radius: 100%;
   transition: opacity 0.15s;
 }
-
+.button.main {
+  background-color: rgb(218, 218, 218);
+  color: black;
+}
 .button:hover {
   opacity: 80%;
   cursor: pointer;

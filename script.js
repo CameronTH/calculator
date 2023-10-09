@@ -97,7 +97,7 @@ function clear() {
   operator = undefined;
   secondNumber = undefined;
   displayValue = "";
-  display.textContent = "";
+  display.textContent = "0";
 }
 
 function continueSum(newfirst) {
