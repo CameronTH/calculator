@@ -12,11 +12,12 @@ buttons.forEach((button) => {
     let pressed = event.target.id;
     console.log("pressed button: " + pressed);
 
-    if (firstNumber === undefined) {
+    if (firstNumber === undefined && !isNaN(pressed)) {
       console.log("first digit");
       firstNumber = pressed;
       updateDisplay(pressed);
     } else if (operator === undefined && !isNaN(pressed)) {
+      console.log(!isNaN(pressed));
       console.log("next digit for first");
       firstNumber += pressed;
       updateDisplay(pressed);
@@ -26,7 +27,8 @@ buttons.forEach((button) => {
         pressed === "-" ||
         pressed === "x" ||
         pressed === "÷") &&
-      operator === undefined
+      operator === undefined &&
+      firstNumber !== undefined
     ) {
       console.log("operator undefined");
       operator = pressed;
@@ -61,12 +63,13 @@ buttons.forEach((button) => {
       `firstNumber: ${firstNumber} | operator: ${operator} | secondNumber: ${secondNumber}`
     );
     if (pressed === "ac") {
-      console.log("ac pressed");
       clear();
     }
     if (pressed === "equals") {
-      console.log("equals pressed");
-      decideOperation();
+      if (operator !== undefined) {
+        console.log("equals pressed");
+        decideOperation();
+      }
     }
   });
 });
@@ -98,8 +101,6 @@ function clear() {
 }
 
 function continueSum(newfirst) {
-  console.log("continue sum-----------------------");
-  console.log(stringMode);
   firstNumber = newfirst;
   secondNumber = undefined;
   if (stringMode === false) {
@@ -114,22 +115,21 @@ function continueSum(newfirst) {
 }
 
 const add = (a, b) => {
-  let add = +a + +b;
-  display.textContent = add;
-  continueSum(add);
+  return continueSum(+a + +b);
 };
 const subtract = (a, b) => {
-  let subtract = +a - +b;
-  display.textContent = subtract;
-  continueSum(subtract);
+  return continueSum(+a - +b);
 };
 const multiply = (a, b) => {
-  let multiply = +a * +b;
-  display.textContent = multiply;
-  continueSum(multiply);
+  continueSum(+a * +b);
 };
 const divide = (a, b) => {
-  let divide = +a / +b;
-  display.textContent = divide;
+  let divide;
+  if (b > 0) {
+    divide = +a / +b;
+  } else {
+    divide = "Cannot divide by 0";
+  }
+
   continueSum(divide);
 };
