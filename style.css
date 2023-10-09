@@ -18,6 +18,7 @@ body {
 }
 .display {
   display: flex;
+
   align-items: end;
   margin-bottom: 5px;
   height: 250px;
@@ -54,9 +55,9 @@ body {
 }
 
 #equals,
-#addition,
-#subtraction,
-#multiplication,
-#division {
+#add,
+#subtract,
+#multiply,
+#divide {
   background-color: rgb(255, 153, 0);
 }
