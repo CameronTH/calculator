@@ -31,13 +31,30 @@ buttons.forEach((button) => {
       operator = pressed;
       updateDisplay(pressed);
     }
+    if (
+      operator !== undefined &&
+      !isNaN(pressed) &&
+      secondNumber === undefined
+    ) {
+      console.log("second number");
+      secondNumber = pressed;
+      updateDisplay(pressed);
+    } else if (secondNumber !== undefined && !isNaN(pressed)) {
+      console.log("next digit for second");
+      secondNumber += pressed;
+      updateDisplay(pressed);
+    }
 
     console.log(
-      `firstNumber: ${firstNumber} | operator: ${operator} | secondNumber${secondNumber}`
+      `firstNumber: ${firstNumber} | operator: ${operator} | secondNumber: ${secondNumber}`
     );
     if (pressed === "ac") {
       console.log("ac pressed");
       clear();
+    }
+    if (pressed === "equals") {
+      console.log("equals pressed");
+      decideOperation();
     }
   });
 });
@@ -55,6 +72,19 @@ function updateDisplay(pressed) {
   display.textContent = displayValue += pressed;
 }
 
+function decideOperation() {
+  display.textContent = "";
+  if (operator === "add") {
+    add(firstNumber, secondNumber);
+  } else if (operator === "subtract") {
+    subtract(firstNumber, secondNumber);
+  } else if (operator === "multiply") {
+    multiply(firstNumber, secondNumber);
+  } else if (operator === "divide") {
+    divide(firstNumber, secondNumber);
+  }
+}
+
 function clear() {
   console.log("clearing");
   firstNumber = undefined;
@@ -64,7 +94,30 @@ function clear() {
   display.textContent = "";
 }
 
-const add = (a, b) => a + b;
-const subtract = (a, b) => a - b;
-const multiply = (a, b) => a * b;
-const divide = (a, b) => a / b;
+function continueSum(newfirst) {
+  firstNumber = newfirst;
+  displayValue = firstNumber;
+  operator = undefined;
+  secondNumber = undefined;
+}
+
+const add = (a, b) => {
+  let add = +a + +b;
+  display.textContent = add;
+  continueSum(add);
+};
+const subtract = (a, b) => {
+  let subtract = +a - +b;
+  display.textContent = subtract;
+  continueSum(subtract);
+};
+const multiply = (a, b) => {
+  let multiply = +a * +b;
+  display.textContent = multiply;
+  continueSum(multiply);
+};
+const divide = (a, b) => {
+  let divide = +a / +b;
+  display.textContent = divide;
+  continueSum(display);
+};
