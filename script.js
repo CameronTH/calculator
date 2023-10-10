@@ -48,8 +48,8 @@ buttons.forEach((button) => {
       ) {
         console.log(". not included");
         firstNumber += pressed;
+        updateDisplay(pressed);
       }
-      updateDisplay(pressed);
     }
 
     if (pressed === "del") {
