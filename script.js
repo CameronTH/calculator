@@ -15,11 +15,10 @@ buttons.forEach((button) => {
     if (operator === undefined && !isNaN(pressed)) {
       if (firstNumber === undefined) {
         firstNumber = pressed;
-        updateDisplay(pressed);
       } else {
         firstNumber += pressed;
-        updateDisplay(pressed);
       }
+      updateDisplay(pressed);
     }
     if (isOperator && operator === undefined && firstNumber !== undefined) {
       console.log("operator undefined");
@@ -110,12 +109,7 @@ const multiply = (a, b) => {
   continueSum(+a * +b);
 };
 const divide = (a, b) => {
-  let divide;
-  if (b > 0) {
-    divide = +a / +b;
-  } else {
-    divide = "Cannot divide by 0";
-  }
-
-  continueSum(Math.round(divide * 2000) / 2000);
+  continueSum(
+    b != 0 ? Math.round((+a / +b) * 2000) / 2000 : "Cannot divide by 0"
+  );
 };
