@@ -55,26 +55,13 @@ buttons.forEach((button) => {
     if (pressed === "del") {
       if (secondNumber?.length > 0) {
         console.log("possible to delete");
-        secondNumber = secondNumber.slice(0, secondNumber.length - 1);
-        console.log("here" + secondNumber.length);
-        if (secondNumber?.length === 0) {
-          secondNumber = undefined;
-        }
-        updateDisplay("delete");
+        secondNumber = deleteLogic(secondNumber);
       } else if (operator?.length > 0) {
         console.log("operator delete");
-        operator = operator.slice(0, operator.length - 1);
-        if (operator?.length === 0) {
-          operator = undefined;
-        }
-        updateDisplay("delete");
+        operator = deleteLogic(operator);
       } else if (firstNumber?.length > 0) {
         console.log("first number delete");
-        firstNumber = firstNumber.slice(0, firstNumber.length - 1);
-        if (firstNumber?.length === 0) {
-          firstNumber = undefined;
-        }
-        updateDisplay("delete");
+        firstNumber = deleteLogic(firstNumber);
       }
     }
 
@@ -91,6 +78,13 @@ buttons.forEach((button) => {
     }
   });
 });
+
+function deleteLogic(element) {
+  updateDisplay("delete");
+  return element.length - 1 === 0
+    ? undefined
+    : element.slice(0, element.length - 1);
+}
 
 function updateDisplay(pressed) {
   if (pressed === "delete") {
