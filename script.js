@@ -11,7 +11,6 @@ buttons.forEach((button) => {
   button.addEventListener("click", (event) => {
     let pressed = event.target.id;
     let isOperator = Array.from(event.target.classList).includes("operator");
-    console.log("pressed button: " + pressed);
     if (operator === undefined && !isNaN(pressed)) {
       if (firstNumber === undefined) {
         firstNumber = pressed;
@@ -25,21 +24,15 @@ buttons.forEach((button) => {
       operator = pressed;
       updateDisplay(pressed);
     }
-    if (
-      operator !== undefined &&
-      !isNaN(pressed) &&
-      secondNumber === undefined
-    ) {
-      console.log("second number");
-      secondNumber = pressed;
-      updateDisplay(pressed);
-    } else if (secondNumber !== undefined && !isNaN(pressed)) {
-      console.log("next digit for second");
-      secondNumber += pressed;
+    if (operator !== undefined && !isNaN(pressed)) {
+      if (secondNumber === undefined) {
+        secondNumber = pressed;
+      } else {
+        secondNumber += pressed;
+      }
       updateDisplay(pressed);
     }
     if (isOperator && secondNumber !== undefined) {
-      console.log("string together mode");
       stringMode = true;
       decideOperation();
     }
@@ -47,12 +40,28 @@ buttons.forEach((button) => {
     console.log(
       `firstNumber: ${firstNumber} | operator: ${operator} | secondNumber: ${secondNumber}`
     );
-    if (pressed === "ac") {
-      clear();
+
+    if (pressed === ".") {
+      console.log(". Pressed");
+
+      if (secondNumber !== undefined && !secondNumber.includes(".")) {
+        secondNumber += pressed;
+        updateDisplay(pressed);
+      } else if (
+        firstNumber !== undefined &&
+        !firstNumber.includes(".") &&
+        secondNumber === undefined
+      ) {
+        console.log(". not included");
+        firstNumber += pressed;
+        updateDisplay(pressed);
+      }
     }
+
+    if (pressed === "ac") clear();
+
     if (pressed === "equals") {
-      if (operator !== undefined) {
-        console.log("equals pressed");
+      if (operator !== undefined && secondNumber !== undefined) {
         decideOperation();
       }
     }
@@ -77,7 +86,6 @@ function decideOperation() {
 }
 
 function clear() {
-  console.log("clearing");
   firstNumber = undefined;
   operator = undefined;
   secondNumber = undefined;
@@ -85,8 +93,8 @@ function clear() {
   display.textContent = "0";
 }
 
-function continueSum(newfirst) {
-  firstNumber = newfirst;
+function continueSum(newfirstNumber) {
+  firstNumber = Math.round(newfirstNumber * 2000) / 2000;
   secondNumber = undefined;
   if (stringMode === false) {
     operator = undefined;
@@ -99,15 +107,10 @@ function continueSum(newfirst) {
   }
 }
 
-const add = (a, b) => {
-  return continueSum(+a + +b);
-};
-const subtract = (a, b) => {
-  return continueSum(+a - +b);
-};
-const multiply = (a, b) => {
-  continueSum(+a * +b);
-};
+const add = (a, b) => continueSum(+a + +b);
+const subtract = (a, b) => continueSum(+a - +b);
+const multiply = (a, b) => continueSum(+a * +b);
+
 const divide = (a, b) => {
   continueSum(
     b != 0 ? Math.round((+a / +b) * 2000) / 2000 : "Cannot divide by 0"

@@ -9,21 +9,22 @@ body {
 }
 
 .calculator-container {
-  height: 850px;
+  display: flex;
+  flex-direction: column;
   border: 25px solid;
   border-radius: 60px;
   background: black;
-
-  width: 500px;
 }
 .display {
   display: flex;
+  flex-direction: column;
   align-items: end;
   justify-content: end;
+  height: 200px;
 
   align-items: end;
   margin-bottom: 5px;
-  height: 250px;
+
   font-size: 90px;
   color: white;
   background-color: black;
