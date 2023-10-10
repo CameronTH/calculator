@@ -10,26 +10,18 @@ let stringMode = false;
 buttons.forEach((button) => {
   button.addEventListener("click", (event) => {
     let pressed = event.target.id;
+    let isOperator = Array.from(event.target.classList).includes("operator");
     console.log("pressed button: " + pressed);
-
-    if (firstNumber === undefined && !isNaN(pressed)) {
-      console.log("first digit");
-      firstNumber = pressed;
-      updateDisplay(pressed);
-    } else if (operator === undefined && !isNaN(pressed)) {
-      console.log(!isNaN(pressed));
-      console.log("next digit for first");
-      firstNumber += pressed;
-      updateDisplay(pressed);
+    if (operator === undefined && !isNaN(pressed)) {
+      if (firstNumber === undefined) {
+        firstNumber = pressed;
+        updateDisplay(pressed);
+      } else {
+        firstNumber += pressed;
+        updateDisplay(pressed);
+      }
     }
-    if (
-      (pressed === "+" ||
-        pressed === "-" ||
-        pressed === "x" ||
-        pressed === "÷") &&
-      operator === undefined &&
-      firstNumber !== undefined
-    ) {
+    if (isOperator && operator === undefined && firstNumber !== undefined) {
       console.log("operator undefined");
       operator = pressed;
       updateDisplay(pressed);
@@ -47,13 +39,7 @@ buttons.forEach((button) => {
       secondNumber += pressed;
       updateDisplay(pressed);
     }
-    if (
-      (pressed === "+" ||
-        pressed === "-" ||
-        pressed === "x" ||
-        pressed === "÷") &&
-      secondNumber !== undefined
-    ) {
+    if (isOperator && secondNumber !== undefined) {
       console.log("string together mode");
       stringMode = true;
       decideOperation();
@@ -131,5 +117,5 @@ const divide = (a, b) => {
     divide = "Cannot divide by 0";
   }
 
-  continueSum(divide);
+  continueSum(Math.round(divide * 2000) / 2000);
 };
