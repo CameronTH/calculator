@@ -19,11 +19,6 @@ buttons.forEach((button) => {
       }
       updateDisplay(pressed);
     }
-    if (isOperator && operator === undefined && firstNumber !== undefined) {
-      console.log("operator undefined");
-      operator = pressed;
-      updateDisplay(pressed);
-    }
     if (operator !== undefined && !isNaN(pressed)) {
       if (secondNumber === undefined) {
         secondNumber = pressed;
@@ -32,21 +27,20 @@ buttons.forEach((button) => {
       }
       updateDisplay(pressed);
     }
+    if (isOperator && operator === undefined && firstNumber !== undefined) {
+      console.log("operator undefined");
+      operator = pressed;
+      updateDisplay(pressed);
+    }
+
     if (isOperator && secondNumber !== undefined) {
       stringMode = true;
       decideOperation();
     }
 
-    console.log(
-      `firstNumber: ${firstNumber} | operator: ${operator} | secondNumber: ${secondNumber}`
-    );
-
     if (pressed === ".") {
-      console.log(". Pressed");
-
       if (secondNumber !== undefined && !secondNumber.includes(".")) {
         secondNumber += pressed;
-        updateDisplay(pressed);
       } else if (
         firstNumber !== undefined &&
         !firstNumber.includes(".") &&
@@ -54,9 +48,39 @@ buttons.forEach((button) => {
       ) {
         console.log(". not included");
         firstNumber += pressed;
-        updateDisplay(pressed);
+      }
+      updateDisplay(pressed);
+    }
+
+    if (pressed === "del") {
+      if (secondNumber?.length > 0) {
+        console.log("possible to delete");
+        secondNumber = secondNumber.slice(0, secondNumber.length - 1);
+        console.log("here" + secondNumber.length);
+        if (secondNumber?.length === 0) {
+          secondNumber = undefined;
+        }
+        updateDisplay("delete");
+      } else if (operator?.length > 0) {
+        console.log("operator delete");
+        operator = operator.slice(0, operator.length - 1);
+        if (operator?.length === 0) {
+          operator = undefined;
+        }
+        updateDisplay("delete");
+      } else if (firstNumber?.length > 0) {
+        console.log("first number delete");
+        firstNumber = firstNumber.slice(0, firstNumber.length - 1);
+        if (firstNumber?.length === 0) {
+          firstNumber = undefined;
+        }
+        updateDisplay("delete");
       }
     }
+
+    console.log(
+      `firstNumber: ${firstNumber} | operator: ${operator} | secondNumber: ${secondNumber}`
+    );
 
     if (pressed === "ac") clear();
 
@@ -69,19 +93,24 @@ buttons.forEach((button) => {
 });
 
 function updateDisplay(pressed) {
-  display.textContent = displayValue += pressed;
+  if (pressed === "delete") {
+    displayValue = displayValue.slice(0, displayValue.length - 1);
+  } else {
+    displayValue = displayValue += pressed;
+  }
+  display.textContent = displayValue;
 }
-
 function decideOperation() {
   display.textContent = "";
-  if (operator === "+") {
-    add(firstNumber, secondNumber);
-  } else if (operator === "-") {
-    subtract(firstNumber, secondNumber);
-  } else if (operator === "x") {
-    multiply(firstNumber, secondNumber);
-  } else if (operator === "÷") {
-    divide(firstNumber, secondNumber);
+  switch (operator) {
+    case "+":
+      return add(firstNumber, secondNumber);
+    case "-":
+      return subtract(firstNumber, secondNumber);
+    case "x":
+      return multiply(firstNumber, secondNumber);
+    case "÷":
+      return divide(firstNumber, secondNumber);
   }
 }
 
@@ -99,18 +128,16 @@ function continueSum(newfirstNumber) {
   if (stringMode === false) {
     operator = undefined;
     displayValue = firstNumber;
-    display.textContent = displayValue;
   } else {
     stringMode = false;
     displayValue = firstNumber + operator;
-    display.textContent = displayValue;
   }
+  display.textContent = displayValue;
 }
 
 const add = (a, b) => continueSum(+a + +b);
 const subtract = (a, b) => continueSum(+a - +b);
 const multiply = (a, b) => continueSum(+a * +b);
-
 const divide = (a, b) => {
   continueSum(
     b != 0 ? Math.round((+a / +b) * 2000) / 2000 : "Cannot divide by 0"
